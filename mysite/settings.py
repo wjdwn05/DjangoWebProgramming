@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'blog',
     'bookmark',
     'taggit.apps.TaggitAppConfig',
-    'taggit_templatetags2'
+    'taggit_templatetags2',
+    'photo',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,8 @@ TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 50
 DISQUS_SHORTNAME = "djangowebprogramming-2"
 DISQUS_MY_DOMAIN = "http://127.0.0.1:8000/"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR/'media'
+
+LOGIN_REDIRECT_URL = '/'

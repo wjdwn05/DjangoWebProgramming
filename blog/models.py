@@ -2,7 +2,8 @@ from tabnanny import verbose
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
-# Create your models here.
+from django.contrib.auth.models import User 
+from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=50,verbose_name='제목')
@@ -12,6 +13,7 @@ class Post(models.Model):
     create_dt = models.DateTimeField(auto_now_add=True,verbose_name='작성일')
     modify_dt = models.DateTimeField(auto_now=True,verbose_name='수정일')
     tags = TaggableManager( blank=True,verbose_name="태그")
+    owner = models.ForeignKey(User,on_delete=models.CASCADE,blank= True, null= True)
 
     class Meta():
         verbose_name = '포스트'
@@ -29,3 +31,7 @@ class Post(models.Model):
 
     def get_next(self):
         return self.get_next_by_modify_dt()
+
+    def save(self, *args,**kwargs ):
+        self.slug = slugify(self.title,allow_unicode= True)
+        super().save(*args,**kwargs)
